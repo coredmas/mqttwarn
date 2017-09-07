@@ -23,12 +23,12 @@ def plugin(srv, item):
     database    = item.config['database']
 
     measurement = item.addrs[0]
-    tag         = "topic=" + item.topic.replace('/', '_')
-    value       = item.message
+    # measurement,tag1=foo,tag2=bar value_a=1,value_b=2 [timestamp]
+    tag_field_value = item.message
     
     try:
         url = "http://%s:%d/write?db=%s" % (host, port, database)
-        data = measurement + ',' + tag + ' value=' + value
+        data = measurement + ',' + tag_field_value
         
         if username is None:
             r = requests.post(url, data=data)
